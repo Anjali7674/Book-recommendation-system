@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Book Recommender</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f7f6;
+            font-family: 'Poppins', sans-serif;
+            color: #222;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar-custom {
+            background: #0b8f55;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 0;
+            padding: 8px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-size: 22px;
+            font-weight: 600;
+            padding-left: 25px;
+        }
+
+        .navbar-nav > li > a {
+            color: white !important;
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .navbar-nav > li > a:hover {
+            background: rgba(255,255,255,0.12) !important;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background: linear-gradient(135deg, #0b8f55, #13b66d);
+            color: white;
+            padding: 65px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            margin-bottom: 28px;
+            opacity: 0.95;
+        }
+
+        .recommend-btn {
+            display: inline-block;
+            background: white;
+            color: #0b8f55;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .recommend-btn:hover {
+            text-decoration: none;
+            color: white;
+            background: #087746;
+            transform: translateY(-2px);
+        }
+
+        /* ================= BOOK SECTION ================= */
+
+        .books-section {
+            padding: 45px 0 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+
+        /* ================= BOOK CARD ================= */
+
+        .book-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 30px;
+            min-height: 470px;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            transition: all 0.3s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .book-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #eee;
+        }
+
+        .book-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #222;
+
+            min-height: 45px;
+        }
+
+        .book-author {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .book-info {
+            font-size: 13px;
+            color: #444;
+            margin: 5px 0;
+        }
+
+        .rating {
+            color: #0b8f55;
+            font-weight: 600;
+        }
+
+        .votes {
+            color: #555;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            background: #12352a;
+            color: #d8e8e1;
+            text-align: center;
+            padding: 25px 10px;
+            margin-top: 20px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            font-size: 13px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 768px) {
+
+            .navbar-brand {
+                font-size: 18px;
+                padding-left: 15px;
+            }
+
+            .hero {
+                padding: 45px 15px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 25px;
+            }
+
+            .book-image {
+                height: 280px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar navbar-custom">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    📚 My Book Recommender
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li>
+                    <a href="/">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/recommend">
+                        Recommend
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#books">
+                        Popular Books
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <!-- ================= HERO SECTION ================= -->
+
+    <section class="hero">
+
+        <div class="container">
+
+            <h1>Find Your Next Favorite Book 📖</h1>
+
+            <p>
+                Explore popular books and discover your next great read
+                with our intelligent book recommendation system.
+            </p>
+
+            <a href="/recommend" class="recommend-btn">
+                🔎 Get Personalized Recommendations
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= POPULAR BOOKS ================= -->
+
+    <section class="books-section" id="books">
+
+        <div class="container">
+
+            <h2 class="section-title">
+                📚 Top 50 Popular Books
+            </h2>
+
+            <p class="section-subtitle">
+                Discover some of the most popular and highly-rated books
+            </p>
+
+
+            <div class="row">
+
+                {% for i in range(book_name|length) %}
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <div class="book-card">
+
+                            <img
+    class="book-image"
+    src="{{ image[i] }}"
+    alt="{{ book_name[i] }}"
+    onerror="this.onerror=null; this.src='https://via.placeholder.com/300x400?text=Book+Cover+Unavailable';"
+>
+                            <div class="book-title">
+                                {{ book_name[i] }}
+                            </div>
+
+                            <div class="book-author">
+                                ✍️ {{ author[i] }}
+                            </div>
+
+                            <div class="book-info votes">
+                                👥 Votes: {{ votes[i] }}
+                            </div>
+
+                            <div class="book-info rating">
+                                ⭐ Rating: {{ rating[i] }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <p>
+            📚 My Book Recommender System
+        </p>
+
+        <p>
+            Discover books you'll love with Machine Learning
+        </p>
+
+    </footer>
+
+</body>
+</html>
+
